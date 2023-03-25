@@ -7,12 +7,18 @@ import NavItem from "./NavItem.tsx";
 import type { INavItem } from "./NavItem.tsx";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
 import { navbarHeight } from "./constants.ts";
+import { useSignal } from "@preact/signals";
 
 function Navbar({ items, searchbar, headerHeight }: {
   items: INavItem[];
   searchbar: SearchbarProps;
   headerHeight: string;
 }) {
+  const search = useSignal("");
+  const inputClass = search.value.length > 0
+    ? "block"
+    : "group-hover:block hidden";
+
   return (
     <>
       {/* Mobile Version */}
@@ -57,7 +63,7 @@ function Navbar({ items, searchbar, headerHeight }: {
                 strokeWidth={0.1}
               />
 
-              <div class="group-hover:block hidden">
+              <div class={`${inputClass} animate-slide-left`}>
                 <input
                   id="search-input"
                   class="flex-grow outline-none placeholder-shown:sibling:hidden border-b-2 border-accent cursor-pointer"
@@ -66,6 +72,7 @@ function Navbar({ items, searchbar, headerHeight }: {
                   aria-controls="search-suggestions"
                   aria-expanded="false"
                   autocomplete="off"
+                  onInput={(e) => (search.value = e.currentTarget.value)}
                 />
               </div>
             </div>
