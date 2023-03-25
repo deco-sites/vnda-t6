@@ -3,34 +3,19 @@ import Button from "$store/components/ui/Button.tsx";
 import { useUI } from "$store/sdk/useUI.ts";
 import { useCart } from "deco-sites/std/commerce/vtex/hooks/useCart.ts";
 
-function SearchButton() {
-  const { displaySearchbar } = useUI();
-
-  return (
-    <Button
-      variant="icon"
-      aria-label="search icon button"
-      onClick={() => {
-        displaySearchbar.value = !displaySearchbar.peek();
-      }}
-    >
-      <Icon id="MagnifyingGlass" width={20} height={20} strokeWidth={0.1} />
-    </Button>
-  );
-}
-
 function MenuButton() {
   const { displayMenu } = useUI();
 
   return (
     <Button
       variant="icon"
+      class="text-accent"
       aria-label="open menu"
       onClick={() => {
         displayMenu.value = true;
       }}
     >
-      <Icon id="Bars3" width={20} height={20} strokeWidth={0.01} />
+      <Icon id="Bars3" width={26} height={26} strokeWidth={0.01} />
     </Button>
   );
 }
@@ -45,14 +30,13 @@ function CartButton() {
     <Button
       {...dataDeco}
       variant="icon"
-      class="relative"
+      class="relative text-accent"
       aria-label="open cart"
-      disabled={loading.value}
       onClick={() => {
         displayCart.value = true;
       }}
     >
-      <Icon id="ShoppingCart" width={20} height={20} strokeWidth={2} />
+      <Icon id="ShoppingCart" width={28} height={28} strokeWidth={2} />
       {totalItems && (
         <span class="absolute text-[9px] right-0 top-0 rounded-full bg-badge text-white w-4 h-4 flex items-center justify-center">
           {totalItems}
@@ -62,13 +46,9 @@ function CartButton() {
   );
 }
 
-function HeaderButton({ variant }: { variant: "cart" | "search" | "menu" }) {
+function HeaderButton({ variant }: { variant: "cart" | "menu" }) {
   if (variant === "cart") {
     return <CartButton />;
-  }
-
-  if (variant === "search") {
-    return <SearchButton />;
   }
 
   if (variant === "menu") {

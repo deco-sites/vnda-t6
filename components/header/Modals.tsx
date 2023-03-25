@@ -30,7 +30,7 @@ function Modals({ menu, searchbar }: Props) {
         }}
       >
         <Suspense fallback={<Loading />}>
-          <Menu {...menu} />
+          <Menu {...menu} placeholder={searchbar?.placeholder} />
         </Suspense>
       </Modal>
 

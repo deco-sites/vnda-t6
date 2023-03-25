@@ -1,13 +1,13 @@
-import Modals from "$store/islands/HeaderModals.tsx";
-import type { Image } from "deco-sites/std/components/types.ts";
+import Modals from "./Modals.tsx";
 import type { EditableProps as SearchbarProps } from "$store/components/search/Searchbar.tsx";
 import type { LoaderReturnType } from "$live/types.ts";
 import type { Product, Suggestion } from "deco-sites/std/commerce/types.ts";
 import type { ClientConfigVTEX } from "deco-sites/std/functions/vtexConfig.ts";
 
-import Alert from "./Alert.tsx";
+import Alert, { IAlert } from "./Alert.tsx";
 import Navbar from "./Navbar.tsx";
-import { headerHeight } from "./constants.ts";
+import { headerHeight, headerNoAlertHeight } from "./constants.ts";
+import { useSignal } from "@preact/signals";
 
 export interface NavItem {
   label: string;
@@ -20,14 +20,15 @@ export interface NavItem {
       href: string;
     }>;
   }>;
-  image?: {
-    src?: Image;
-    alt?: string;
+  megamenuLink?: {
+    label: string;
+    href: string;
   };
 }
 
 export interface Props {
-  alerts: string[];
+  alert: IAlert;
+
   /** @title Search Bar */
   searchbar?: SearchbarProps;
   /**
@@ -55,7 +56,7 @@ export interface Props {
 
 function Header(
   {
-    alerts,
+    alert,
     searchbar: _searchbar,
     products,
     navItems = [],
@@ -63,12 +64,21 @@ function Header(
     configVTEX,
   }: Props,
 ) {
+  const open = useSignal(true);
+  const closeAlert = () => (open.value = false);
   const searchbar = { ..._searchbar, products, suggestions, configVTEX };
+  const finalHeaderHeight = open.value ? headerHeight : headerNoAlertHeight;
+
   return (
-    <header class={`h-[${headerHeight}]`}>
+    <header class={`h-[${finalHeaderHeight}]`}>
       <div class="bg-default fixed w-full z-50">
-        <Alert alerts={alerts} />
-        <Navbar items={navItems} searchbar={searchbar} />
+        <Alert alert={alert} isOpen={open.value} onClose={closeAlert} />
+
+        <Navbar
+          items={navItems}
+          searchbar={searchbar}
+          headerHeight={finalHeaderHeight}
+        />
       </div>
 
       <Modals

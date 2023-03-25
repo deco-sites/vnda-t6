@@ -1,17 +1,24 @@
-import HeaderButton from "$store/islands/HeaderButton.tsx";
+import HeaderButton from "./Buttons.tsx";
 import Icon from "$store/components/ui/Icon.tsx";
 import Button from "$store/components/ui/Button.tsx";
+import Container from "$store/components/ui/Container.tsx";
 
 import NavItem from "./NavItem.tsx";
-import { navbarHeight } from "./constants.ts";
 import type { INavItem } from "./NavItem.tsx";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
-import HeaderSearchMenu from "$store/islands/HeaderSearchMenu.tsx";
+import { navbarHeight } from "./constants.ts";
+import { useSignal } from "@preact/signals";
 
-function Navbar({ items, searchbar }: {
+function Navbar({ items, searchbar, headerHeight }: {
   items: INavItem[];
   searchbar: SearchbarProps;
+  headerHeight: string;
 }) {
+  const search = useSignal("");
+  const inputClass = search.value.length > 0
+    ? "block"
+    : "group-hover:block hidden";
+
   return (
     <>
       {/* Mobile Version */}
@@ -25,38 +32,63 @@ function Navbar({ items, searchbar }: {
           class={`flex-grow inline-flex items-center min-h-[${navbarHeight}]`}
           aria-label="Store logo"
         >
-          <Icon id="Logo" width={126} height={16} />
+          <Icon id="Logo" width={144} height={36} />
         </a>
 
         <div class="flex gap-1">
-          <HeaderButton variant="search" />
           <HeaderButton variant="cart" />
         </div>
       </div>
 
       {/* Desktop Version */}
-      <div class="hidden md:flex flex-row justify-between items-center border-b-1 border-default w-full pl-2 pr-3">
-        <div class="flex-none w-44">
-          <a href="/" aria-label="Store logo" class="block px-4 py-3 w-[160px]">
-            <Icon id="Logo" width={126} height={16} />
-          </a>
-        </div>
-        <div class="flex-auto flex justify-center">
-          {items.map((item) => <NavItem item={item} />)}
-        </div>
-        <div class="flex-none w-44 flex items-center justify-end gap-2">
-          <HeaderButton variant="search" />
-          <HeaderSearchMenu searchbar={searchbar} />
-          <Button
-            as="a"
-            variant="icon"
-            href="/login"
-            aria-label="Log in"
-          >
-            <Icon id="User" width={20} height={20} strokeWidth={0.4} />
-          </Button>
-          <HeaderButton variant="cart" />
-        </div>
+      <div class="hidden md:block border-b-1 border-default pl-2 pr-3">
+        <Container class="flex flex-row items-center w-full">
+          <div class="flex-none w-44 mr-16 px-4 py-3">
+            <a href="/" aria-label="Store logo" class="block">
+              <Icon id="Logo" width={144} height={36} />
+            </a>
+          </div>
+          <div class="flex justify-center">
+            {items.map((item) => (
+              <NavItem item={item} headerHeight={headerHeight} />
+            ))}
+          </div>
+          <div class="ml-auto flex-none w-44 flex items-center justify-end gap-2">
+            <div class="px-3 group cursor-pointer flex flex-row gap-2">
+              <Icon
+                id="MagnifyingGlass"
+                class="text-accent"
+                width={26}
+                height={26}
+                strokeWidth={0.1}
+              />
+
+              <div class={`${inputClass} animate-slide-left`}>
+                <input
+                  id="search-input"
+                  class="flex-grow outline-none placeholder-shown:sibling:hidden border-b-2 border-accent cursor-pointer"
+                  role="combobox"
+                  placeholder={searchbar.placeholder}
+                  aria-controls="search-suggestions"
+                  aria-expanded="false"
+                  autocomplete="off"
+                  onInput={(e) => (search.value = e.currentTarget.value)}
+                />
+              </div>
+            </div>
+
+            <Button
+              as="a"
+              class="text-accent"
+              variant="icon"
+              href="/login"
+              aria-label="Log in"
+            >
+              <Icon id="User" width={26} height={26} strokeWidth={1} />
+            </Button>
+            <HeaderButton variant="cart" />
+          </div>
+        </Container>
       </div>
     </>
   );

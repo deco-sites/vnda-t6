@@ -6,6 +6,7 @@ import type { INavItem } from "./NavItem.tsx";
 
 export interface Props {
   items: INavItem[];
+  placeholder?: string;
 }
 
 function MenuItem({ item, level = 0 }: { item: INavItem; level?: number }) {
@@ -14,7 +15,7 @@ function MenuItem({ item, level = 0 }: { item: INavItem; level?: number }) {
 
   const title = (
     <Text
-      class="flex-grow min-h-[40px] flex items-center justify-start"
+      class="flex-grow min-h-[40px] flex items-center justify-start text-accent"
       variant={level === 0 ? "menu" : "caption"}
     >
       {item.label}
@@ -33,10 +34,14 @@ function MenuItem({ item, level = 0 }: { item: INavItem; level?: number }) {
       >
         {hasChildren
           ? title
-          : <a class="w-full inline-block" href={item.href}>{title}</a>}
+          : (
+            <a class="w-full inline-block text-accent" href={item.href}>
+              {title}
+            </a>
+          )}
 
         {hasChildren && (
-          <Button variant="icon">
+          <Button variant="icon" class="text-accent">
             <Icon
               class={open.value === true ? "hidden" : "block"}
               id="Plus"
@@ -57,13 +62,6 @@ function MenuItem({ item, level = 0 }: { item: INavItem; level?: number }) {
 
       {hasChildren && (
         <ul class={`flex-col ${open.value === true ? "flex" : "hidden"}`}>
-          <li>
-            <a href={item.href} class="w-full py-2 pl-2 inline-block">
-              <Text class="underline" variant="caption">
-                Ver todos
-              </Text>
-            </a>
-          </li>
           {item.children!.map((node) => (
             <MenuItem
               item={node}
@@ -76,52 +74,35 @@ function MenuItem({ item, level = 0 }: { item: INavItem; level?: number }) {
   );
 }
 
-function Menu({ items }: Props) {
+function Menu({ items, placeholder }: Props) {
   return (
-    <>
+    <div class="flex flex-col">
+      <div class="p-4">
+        <div class="border-1 p-3 items-center rounded-[4px] border-accent flex flex-row gap-4">
+          <Icon
+            id="MagnifyingGlass"
+            class="text-accent"
+            width={20}
+            height={20}
+            strokeWidth={0.1}
+          />
+
+          <input
+            id="search-input"
+            class="flex-grow outline-none placeholder-shown:sibling:hidden"
+            role="combobox"
+            placeholder={placeholder}
+            aria-controls="search-suggestions"
+            aria-expanded="false"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
       <ul class="px-4 flex-grow flex flex-col divide-y divide-default">
         {items.map((item) => <MenuItem item={item} />)}
       </ul>
-
-      <ul class="flex flex-col py-2 bg-hover">
-        <li>
-          <a
-            class="flex items-center gap-4 px-4 py-2"
-            href="https://www.deco.cx"
-          >
-            <Icon id="Heart" width={20} height={20} strokeWidth={2} />
-            <Text variant="caption">Lista de desejos</Text>
-          </a>
-        </li>
-        <li>
-          <a
-            class="flex items-center gap-4 px-4 py-2"
-            href="https://www.deco.cx"
-          >
-            <Icon id="MapPin" width={20} height={20} strokeWidth={2} />
-            <Text variant="caption">Nossas lojas</Text>
-          </a>
-        </li>
-        <li>
-          <a
-            class="flex items-center gap-4 px-4 py-2"
-            href="https://www.deco.cx"
-          >
-            <Icon id="Phone" width={20} height={20} strokeWidth={2} />
-            <Text variant="caption">Fale conosco</Text>
-          </a>
-        </li>
-        <li>
-          <a
-            class="flex items-center gap-4 px-4 py-2"
-            href="https://www.deco.cx"
-          >
-            <Icon id="User" width={20} height={20} strokeWidth={2} />
-            <Text variant="caption">Minha conta</Text>
-          </a>
-        </li>
-      </ul>
-    </>
+    </div>
   );
 }
 

@@ -69,10 +69,16 @@ const Modal = ({
       <section class="pt-6 h-full bg-default flex flex-col">
         <header class="flex px-4 justify-between items-center pb-6 border-b-1 border-default">
           <h1>
-            <Text variant="heading-2">{title}</Text>
+            <Text variant="heading-2" class="text-accent">{title}</Text>
           </h1>
           <Button variant="icon" onClick={onClose}>
-            <Icon id="XMark" width={20} height={20} strokeWidth={2} />
+            <Icon
+              id="XMark"
+              class="text-accent"
+              width={20}
+              height={20}
+              strokeWidth={2}
+            />
           </Button>
         </header>
         <div class="overflow-y-auto h-full flex flex-col">
