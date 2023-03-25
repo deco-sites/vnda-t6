@@ -1,16 +1,17 @@
-import HeaderButton from "$store/islands/HeaderButton.tsx";
+import HeaderButton from "./Buttons.tsx";
 import Icon from "$store/components/ui/Icon.tsx";
 import Button from "$store/components/ui/Button.tsx";
 
 import NavItem from "./NavItem.tsx";
-import { navbarHeight } from "./constants.ts";
 import type { INavItem } from "./NavItem.tsx";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
-import HeaderSearchMenu from "$store/islands/HeaderSearchMenu.tsx";
+import HeaderSearchMenu from "./HeaderSearchMenu.tsx";
+import { navbarHeight } from "./constants.ts";
 
-function Navbar({ items, searchbar }: {
+function Navbar({ items, searchbar, headerHeight }: {
   items: INavItem[];
   searchbar: SearchbarProps;
+  headerHeight: string;
 }) {
   return (
     <>
@@ -42,11 +43,13 @@ function Navbar({ items, searchbar }: {
           </a>
         </div>
         <div class="flex-auto flex justify-center">
-          {items.map((item) => <NavItem item={item} />)}
+          {items.map((item) => (
+            <NavItem item={item} headerHeight={headerHeight} />
+          ))}
         </div>
         <div class="flex-none w-44 flex items-center justify-end gap-2">
           <HeaderButton variant="search" />
-          <HeaderSearchMenu searchbar={searchbar} />
+          <HeaderSearchMenu searchbar={searchbar} headerHeight={headerHeight} />
           <Button
             as="a"
             variant="icon"

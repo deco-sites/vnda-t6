@@ -1,6 +1,5 @@
 import Text from "$store/components/ui/Text.tsx";
 import Image from "deco-sites/std/components/Image.tsx";
-import { headerHeight } from "./constants.ts";
 
 export interface INavItem {
   label: string;
@@ -9,12 +8,14 @@ export interface INavItem {
   image?: { src?: string; alt?: string };
 }
 
-function NavItem({ item }: { item: INavItem }) {
+function NavItem(
+  { item, headerHeight }: { item: INavItem; headerHeight: string },
+) {
   const { href, label, children, image } = item;
 
   return (
     <li class="group flex items-center">
-      <a href={href} class="px-4 py-3">
+      <a href={href} class="px-4 py-7">
         <Text
           class="group-hover:border-black border-solid border-b border-white"
           variant="menu"

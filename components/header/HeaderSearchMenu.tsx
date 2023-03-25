@@ -3,15 +3,15 @@ import { lazy, Suspense } from "preact/compat";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
 import { useUI } from "$store/sdk/useUI.ts";
 import Loading from "$store/components/ui/Loading.tsx";
-import { headerHeight } from "$store/components/header/constants.ts";
 
 const Searchbar = lazy(() => import("$store/components/search/Searchbar.tsx"));
 
 interface Props {
   searchbar: SearchbarProps;
+  headerHeight: string;
 }
 
-export default function HeaderSearchMenu({ searchbar }: Props) {
+export default function HeaderSearchMenu({ searchbar, headerHeight }: Props) {
   const { displaySearchbar } = useUI();
   const open = displaySearchbar.value &&
     window?.matchMedia?.("(min-width: 768px)")?.matches;
