@@ -21,9 +21,9 @@ export interface NavItem {
       href: string;
     }>;
   }>;
-  image?: {
-    src?: Image;
-    alt?: string;
+  megamenuLink?: {
+    label: string;
+    href: string;
   };
 }
 

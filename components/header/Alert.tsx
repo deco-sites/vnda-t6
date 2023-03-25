@@ -37,13 +37,16 @@ function Alert(
     <div id={id} class={`relative ${containerClass}`}>
       <Slider class="bg-badge gap-6 scrollbar-none">
         <Text
-          class="flex justify-center items-center w-screen h-[38px]"
+          class="flex justify-center items-center w-screen h-[34px]"
           variant="body"
           tone="default-inverse"
         >
           {alert.title}
 
-          <a href={alert.url} class="ml-2 flex flex-row gap-1 items-center">
+          <a
+            href={alert.url}
+            class="ml-2 flex flex-row gap-1 items-center font-medium"
+          >
             {alert.action}
 
             <Icon

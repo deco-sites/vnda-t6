@@ -807,24 +807,23 @@ const manifest: DecoManifest = {
                     ],
                   },
                 },
-                "image": {
-                  "title": "Image",
+                "megamenuLink": {
+                  "title": "Megamenu Link",
                   "type": "object",
                   "properties": {
-                    "src": {
-                      "format": "image-uri",
+                    "label": {
                       "type": "string",
-                      "title": "Src",
+                      "title": "Label",
                     },
-                    "alt": {
-                      "type": [
-                        "string",
-                        "null",
-                      ],
-                      "title": "Alt",
+                    "href": {
+                      "type": "string",
+                      "title": "Href",
                     },
                   },
-                  "required": [],
+                  "required": [
+                    "label",
+                    "href",
+                  ],
                 },
               },
               "required": [
