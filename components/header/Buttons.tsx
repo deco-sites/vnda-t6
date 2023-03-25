@@ -3,23 +3,6 @@ import Button from "$store/components/ui/Button.tsx";
 import { useUI } from "$store/sdk/useUI.ts";
 import { useCart } from "deco-sites/std/commerce/vtex/hooks/useCart.ts";
 
-function SearchButton() {
-  const { displaySearchbar } = useUI();
-
-  return (
-    <Button
-      variant="icon"
-      class="text-accent"
-      aria-label="search icon button"
-      onClick={() => {
-        displaySearchbar.value = !displaySearchbar.peek();
-      }}
-    >
-      <Icon id="MagnifyingGlass" width={26} height={26} strokeWidth={0.1} />
-    </Button>
-  );
-}
-
 function MenuButton() {
   const { displayMenu } = useUI();
 
@@ -63,13 +46,9 @@ function CartButton() {
   );
 }
 
-function HeaderButton({ variant }: { variant: "cart" | "search" | "menu" }) {
+function HeaderButton({ variant }: { variant: "cart" | "menu" }) {
   if (variant === "cart") {
     return <CartButton />;
-  }
-
-  if (variant === "search") {
-    return <SearchButton />;
   }
 
   if (variant === "menu") {

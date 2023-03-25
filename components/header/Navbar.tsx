@@ -6,7 +6,6 @@ import Container from "$store/components/ui/Container.tsx";
 import NavItem from "./NavItem.tsx";
 import type { INavItem } from "./NavItem.tsx";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
-import HeaderSearchMenu from "./HeaderSearchMenu.tsx";
 import { navbarHeight } from "./constants.ts";
 
 function Navbar({ items, searchbar, headerHeight }: {
@@ -31,7 +30,6 @@ function Navbar({ items, searchbar, headerHeight }: {
         </a>
 
         <div class="flex gap-1">
-          <HeaderButton variant="search" />
           <HeaderButton variant="cart" />
         </div>
       </div>
@@ -50,11 +48,28 @@ function Navbar({ items, searchbar, headerHeight }: {
             ))}
           </div>
           <div class="ml-auto flex-none w-44 flex items-center justify-end gap-2">
-            <HeaderButton variant="search" />
-            <HeaderSearchMenu
-              searchbar={searchbar}
-              headerHeight={headerHeight}
-            />
+            <div class="px-3 group cursor-pointer flex flex-row gap-2">
+              <Icon
+                id="MagnifyingGlass"
+                class="text-accent"
+                width={26}
+                height={26}
+                strokeWidth={0.1}
+              />
+
+              <div class="group-hover:block hidden">
+                <input
+                  id="search-input"
+                  class="flex-grow outline-none placeholder-shown:sibling:hidden border-b-2 border-accent cursor-pointer"
+                  role="combobox"
+                  placeholder={searchbar.placeholder}
+                  aria-controls="search-suggestions"
+                  aria-expanded="false"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
             <Button
               as="a"
               class="text-accent"
