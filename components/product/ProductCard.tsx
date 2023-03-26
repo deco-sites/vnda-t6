@@ -1,40 +1,60 @@
 import Image from "deco-sites/std/components/Image.tsx";
 import Text from "$store/components/ui/Text.tsx";
-import Avatar from "$store/components/ui/Avatar.tsx";
 import Button from "$store/components/ui/Button.tsx";
 import { useOffer } from "$store/sdk/useOffer.ts";
 import { formatPrice } from "$store/sdk/format.ts";
 import { useVariantPossibilities } from "$store/sdk/useVariantPossiblities.ts";
 import type { Product } from "deco-sites/std/commerce/types.ts";
 
-/**
- * A simple, inplace sku selector to be displayed once the user hovers the product card
- * It takes the user to the pdp once the user clicks on a given sku. This is interesting to
- * remove JS from the frontend
- */
 function Sizes(product: Product) {
   const possibilities = useVariantPossibilities(product);
-  const options = Object.entries(
-    possibilities["TAMANHO"] ?? possibilities["Tamanho"] ?? {},
-  );
+  const sizes = possibilities["TAMANHO"] ?? possibilities["Tamanho"];
+  const options = Object.entries(sizes ?? {});
+
+  if (options.length < 1) return null;
 
   return (
-    <ul class="flex justify-center items-center gap-2">
-      {options.map(([value, urls]) => {
-        const url = urls.find((url) => url === product.url) || urls[0];
+    <Text class="text-accent" variant="body">
+      {options.length} opções disponíveis
+    </Text>
+  );
+}
 
-        return (
-          <a href={url}>
-            <Avatar
-              class="bg-default"
-              variant="abbreviation"
-              content={value}
-              disabled={url === product.url}
-            />
-          </a>
-        );
-      })}
-    </ul>
+function Offer(
+  { price, listPrice, priceCurrency }: {
+    price?: number;
+    listPrice?: number;
+    priceCurrency?: string;
+  },
+) {
+  if (!listPrice || !price || listPrice <= price) {
+    return <div />;
+  }
+
+  const discountPercentage = Math.round(100 - ((price * 100) / listPrice));
+
+  return (
+    <div class="flex flex-row gap-2 items-center">
+      <span class="bg-red-600 text-white rounded-xl px-2 py-0.5 text-sm font-bold">
+        -{discountPercentage.toFixed(1)}%
+      </span>
+
+      <Text class="text-red-500 text-[15px]">
+        {formatPrice(listPrice, priceCurrency!)}
+      </Text>
+    </div>
+  );
+}
+
+function Installments(
+  { price, priceCurrency }: { price: number; priceCurrency: string },
+) {
+  const installmentValue = price / 10;
+
+  return (
+    <Text class="text-accent" variant="body">
+      10x de {formatPrice(installmentValue, priceCurrency!)} sem juros
+    </Text>
   );
 }
 
@@ -52,6 +72,7 @@ function ProductCard({ product, preload }: Props) {
     image: images,
     offers,
   } = product;
+
   const [front, back] = images ?? [];
   const { listPrice, price, seller } = useOffer(offers);
 
@@ -81,40 +102,35 @@ function ProductCard({ product, preload }: Props) {
             class="rounded w-full hidden group-hover:block"
             sizes="(max-width: 640px) 50vw, 20vw"
           />
-          {seller && (
-            <div
-              class="absolute bottom-0 hidden sm:group-hover:flex flex-col gap-2 w-full p-2 bg-opacity-10"
-              style={{
-                backgroundColor: "rgba(255, 255, 255, 0.2)",
-                backdropFilter: "blur(2px)",
-              }}
-            >
-              <Sizes {...product} />
-              <Button as="a" href={product.url}>Visualizar Produto</Button>
-            </div>
-          )}
         </div>
 
-        <div class="flex flex-col gap-1 py-2">
+        <div class="grid grid-cols-1 grid-rows-[32px_32px_36px_24px] items-center py-2">
           <Text
-            class="overflow-hidden overflow-ellipsis whitespace-nowrap"
-            variant="caption"
+            class="overflow-hidden overflow-ellipsis whitespace-nowrap font-bold text-accent"
+            variant="heading-3"
           >
             {name}
           </Text>
-          <div class="flex items-center gap-2">
-            <Text
-              class="line-through"
-              variant="list-price"
-              tone="subdued"
-            >
-              {formatPrice(listPrice, offers!.priceCurrency!)}
-            </Text>
-            <Text variant="caption" tone="price">
-              {formatPrice(price, offers!.priceCurrency!)}
-            </Text>
-          </div>
+          <Offer
+            price={price}
+            listPrice={listPrice}
+            priceCurrency={offers!.priceCurrency}
+          />
+          <Text variant="heading-2" class="text-accent font-bold">
+            {formatPrice(price, offers!.priceCurrency!)}
+          </Text>
+          <Installments price={price!} priceCurrency={offers!.priceCurrency!} />
         </div>
+
+        {seller && (
+          <div class="flex flex-col gap-4 w-full bg-opacity-10">
+            <Sizes {...product} />
+
+            <Button as="a" variant="secondary" href={product.url}>
+              Comprar
+            </Button>
+          </div>
+        )}
       </a>
     </div>
   );
