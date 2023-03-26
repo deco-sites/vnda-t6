@@ -191,15 +191,25 @@ const manifest: DecoManifest = {
                   "title": "Alt",
                   "description": "Image alt text",
                 },
+                "caption": {
+                  "type": "string",
+                  "title": "Caption",
+                  "description": "When you click you go to",
+                },
+                "action": {
+                  "type": "string",
+                  "title": "Action",
+                },
                 "href": {
                   "type": "string",
                   "title": "Href",
-                  "description": "When you click you go to",
                 },
               },
               "required": [
                 "srcMobile",
                 "alt",
+                "caption",
+                "action",
                 "href",
               ],
             },

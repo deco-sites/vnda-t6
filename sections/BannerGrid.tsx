@@ -1,3 +1,4 @@
+import Text from "$store/components/ui/Text.tsx";
 import Container from "$store/components/ui/Container.tsx";
 import { Picture, Source } from "deco-sites/std/components/Picture.tsx";
 import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
@@ -12,6 +13,8 @@ export interface Banner {
   /**
    * @description When you click you go to
    */
+  caption: string;
+  action: string;
   href: string;
 }
 
@@ -42,7 +45,7 @@ export default function BannnerGrid({
 }: Props) {
   return (
     <Container>
-      <section class="w-full px-4 md:px-0 mx-auto">
+      <section class="w-full px-4 md:px-0 mx-auto py-10">
         {title &&
           (
             <div class="py-6 md:py-0 md:pb-[40px] flex items-center mt-6">
@@ -62,40 +65,52 @@ export default function BannnerGrid({
               : banners.length
           }`}
         >
-          {banners.map(({ href, srcMobile, srcDesktop, alt }) => (
-            <a
-              href={href}
-              class={`overflow-hidden ${
-                borderRadius?.mobile && `rounded-[${borderRadius.mobile}px]`
-              } ${
-                borderRadius?.desktop
-                  ? `sm:rounded-[${borderRadius.desktop}px]`
-                  : `sm:rounded-none`
-              }`}
-            >
-              <Picture>
-                <Source
-                  media="(max-width: 767px)"
-                  src={srcMobile}
-                  width={100}
-                  height={100}
-                />
-                <Source
-                  media="(min-width: 768px)"
-                  src={srcDesktop ? srcDesktop : srcMobile}
-                  width={250}
-                  height={250}
-                />
-                <img
-                  class="w-full"
-                  sizes="(max-width: 640px) 100vw, 30vw"
-                  src={srcMobile}
-                  alt={alt}
-                  decoding="async"
-                  loading="lazy"
-                />
-              </Picture>
-            </a>
+          {banners.map((
+            { href, srcMobile, srcDesktop, alt, action, caption },
+          ) => (
+            <div class="flex flex-col gap-4">
+              <a
+                href={href}
+                class={`overflow-hidden ${
+                  borderRadius?.mobile && `rounded-[${borderRadius.mobile}px]`
+                } ${
+                  borderRadius?.desktop
+                    ? `sm:rounded-[${borderRadius.desktop}px]`
+                    : `sm:rounded-none`
+                }`}
+              >
+                <Picture>
+                  <Source
+                    media="(max-width: 767px)"
+                    src={srcMobile}
+                    width={100}
+                    height={100}
+                  />
+                  <Source
+                    media="(min-width: 768px)"
+                    src={srcDesktop ? srcDesktop : srcMobile}
+                    width={250}
+                    height={250}
+                  />
+                  <img
+                    class="w-full"
+                    sizes="(max-width: 640px) 100vw, 30vw"
+                    src={srcMobile}
+                    alt={alt}
+                    decoding="async"
+                    loading="lazy"
+                  />
+                </Picture>
+              </a>
+              <Text class="text-accent" variant="body">
+                {caption}
+              </Text>
+              <a href={href} class="hover:ml-4 transition-all">
+                <Text class="text-accent font-bold" variant="heading-2">
+                  {action}
+                </Text>
+              </a>
+            </div>
           ))}
         </div>
       </section>
