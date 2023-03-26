@@ -11,7 +11,7 @@ function Sizes(product: Product) {
   const sizes = possibilities["TAMANHO"] ?? possibilities["Tamanho"];
   const options = Object.entries(sizes ?? {});
 
-  if (options.length < 1) return null;
+  if (options.length < 1) return <div />;
 
   return (
     <Text class="text-accent" variant="body">
@@ -104,7 +104,7 @@ function ProductCard({ product, preload }: Props) {
           />
         </div>
 
-        <div class="grid grid-cols-1 grid-rows-[32px_32px_36px_24px] items-center py-2">
+        <div class="grid grid-cols-1 grid-rows-[32px_32px_36px_24px_24px] items-center py-2">
           <Text
             class="overflow-hidden overflow-ellipsis whitespace-nowrap font-bold text-accent"
             variant="heading-3"
@@ -120,13 +120,17 @@ function ProductCard({ product, preload }: Props) {
             {formatPrice(price, offers!.priceCurrency!)}
           </Text>
           <Installments price={price!} priceCurrency={offers!.priceCurrency!} />
+          <Sizes {...product} />
         </div>
 
         {seller && (
-          <div class="flex flex-col gap-4 w-full bg-opacity-10">
-            <Sizes {...product} />
-
-            <Button as="a" variant="secondary" href={product.url}>
+          <div class="flex w-full mt-4">
+            <Button
+              as="a"
+              class="w-full"
+              href={product.url}
+              variant="secondary"
+            >
               Comprar
             </Button>
           </div>

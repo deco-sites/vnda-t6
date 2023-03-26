@@ -26,44 +26,46 @@ function ProductShelf({
   }
 
   return (
-    <Container
-      id={id}
-      class="grid grid-cols-[48px_1fr_48px] grid-rows-[48px_1fr_48px_1fr] py-10 px-0 sm:px-5"
-    >
-      <h2 class="text-center row-start-1 col-span-full">
-        <Text variant="heading-2">{title}</Text>
-      </h2>
+    <div id={id}>
+      <Container class="grid grid-cols-[48px_1fr_48px] grid-rows-[48px_1fr_48px_1fr] py-10 px-0 sm:px-5">
+        <h2 class="text-center row-start-1 col-span-full">
+          <Text variant="heading-2">{title}</Text>
+        </h2>
 
-      <Slider
-        class="gap-6 col-span-full row-start-2 row-end-5"
-        snap="snap-center sm:snap-start block first:ml-6 sm:first:ml-0 last:mr-6 sm:last:mr-0"
-      >
-        {products?.map((product) => (
-          <div class="min-w-[270px] max-w-[270px] sm:min-w-[292px] sm:max-w-[292px]">
-            <ProductCard product={product} />
-          </div>
-        ))}
-      </Slider>
+        <Slider
+          class="gap-6 col-span-full row-start-2 row-end-5"
+          snap="snap-center sm:snap-start block first:ml-6 sm:first:ml-0 last:mr-6 sm:last:mr-0"
+        >
+          {products?.map((product) => (
+            <div class="min-w-[270px] max-w-[270px] sm:min-w-[292px] sm:max-w-[292px]">
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </Slider>
 
-      <>
-        <div class="hidden relative sm:block z-10 col-start-1 row-start-3">
-          <div class="absolute right-1/2 bg-interactive-inverse rounded-full border-default border">
-            <Button variant="icon" data-slide="prev" aria-label="Previous item">
-              <Icon size={20} id="ChevronLeft" strokeWidth={3} />
-            </Button>
-          </div>
-        </div>
-        <div class="hidden relative sm:block z-10 col-start-3 row-start-3">
-          <div class="absolute left-1/2 bg-interactive-inverse rounded-full border-default border">
-            <Button variant="icon" data-slide="next" aria-label="Next item">
-              <Icon size={20} id="ChevronRight" strokeWidth={3} />
-            </Button>
-          </div>
-        </div>
-      </>
+        <SliderControllerJS rootId={id} />
+      </Container>
 
-      <SliderControllerJS rootId={id} />
-    </Container>
+      <Container class="flex flex-row justify-between">
+        <Button
+          class="text-accent shadow"
+          variant="icon"
+          data-slide="prev"
+          aria-label="Previous item"
+        >
+          <Icon width={20} height={20} id="ChevronLeft" strokeWidth={3} />
+        </Button>
+
+        <Button
+          class="text-accent shadow"
+          variant="icon"
+          data-slide="next"
+          aria-label="Next item"
+        >
+          <Icon width={20} height={20} id="ChevronRight" strokeWidth={3} />
+        </Button>
+      </Container>
+    </div>
   );
 }
 
