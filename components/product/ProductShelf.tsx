@@ -26,8 +26,8 @@ function ProductShelf({
   }
 
   return (
-    <div id={id} class="py-10 px-0 sm:px-5">
-      <Container>
+    <div id={id} class="py-10 px-0">
+      <Container class="px-5 lg:px-0">
         <div class="flex flex-row justify-between w-full">
           <h2 class="row-start-1 col-span-full">
             <Text class="text-accent uppercase font-bold" variant="heading-2">
@@ -44,10 +44,10 @@ function ProductShelf({
       <Container class="grid grid-cols-[48px_1fr_48px] grid-rows-[12px_1fr_48px_1fr]">
         <Slider
           class="gap-6 col-span-full row-start-2 row-end-5"
-          snap="snap-center sm:snap-start block first:ml-6 sm:first:ml-0 last:mr-6 sm:last:mr-0"
+          snap="snap-center lg:snap-start block first:ml-6 lg:first:ml-0 last:mr-6 lg:last:mr-0"
         >
           {products?.map((product) => (
-            <div class="min-w-[270px] max-w-[270px] sm:min-w-[292px] sm:max-w-[292px]">
+            <div class="min-w-[270px] max-w-[270px] lg:min-w-[292px] lg:max-w-[292px]">
               <ProductCard product={product} />
             </div>
           ))}
@@ -56,7 +56,7 @@ function ProductShelf({
         <SliderControllerJS rootId={id} />
       </Container>
 
-      <Container class="flex flex-row justify-between mt-4">
+      <Container class="hidden sm:flex flex-row justify-between mt-4 px-5 lg:px-0">
         <Button
           class="text-accent shadow"
           variant="icon"

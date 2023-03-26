@@ -45,10 +45,10 @@ export default function BannnerGrid({
 }: Props) {
   return (
     <Container>
-      <section class="w-full px-4 md:px-0 mx-auto py-10">
+      <section class="w-full px-4 lg:px-0 mx-auto py-10">
         {title &&
           (
-            <div class="py-6 md:py-0 md:pb-[40px] flex items-center mt-6">
+            <div class="py-6 lg:py-0 lg:pb-[40px] flex items-center mt-6">
               <h2 class={"text-lg leading-5 font-semibold uppercase "}>
                 {title}
               </h2>
@@ -57,9 +57,9 @@ export default function BannnerGrid({
             </div>
           )}
         <div
-          class={`grid gap-4 md:gap-6 grid-cols-${
+          class={`grid gap-4 lg:gap-6 grid-cols-${
             itemsPerLine && itemsPerLine.mobile ? itemsPerLine.mobile : "2"
-          } md:grid-cols-${
+          } lg:grid-cols-${
             itemsPerLine && itemsPerLine.desktop
               ? itemsPerLine.desktop
               : banners.length

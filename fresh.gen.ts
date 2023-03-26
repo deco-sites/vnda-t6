@@ -1034,11 +1034,25 @@ const manifest: DecoManifest = {
         "title": " Product Gallery",
         "type": "object",
         "properties": {
+          "title": {
+            "type": [
+              "string",
+              "null",
+            ],
+            "title": "Title",
+          },
           "page": {
             "$id": "dc324bcbdc313fdca3eaf23a9c1547d4702ee1ce",
             "format": "live-function",
             "type": "string",
             "title": "Page",
+          },
+          "hidePagination": {
+            "type": [
+              "boolean",
+              "null",
+            ],
+            "title": "Hide Pagination",
           },
         },
         "required": [
