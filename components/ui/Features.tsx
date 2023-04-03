@@ -8,10 +8,6 @@ export interface Feature {
    */
   icon: AvailableIcons;
   /**
-   * @description Title
-   */
-  title: string;
-  /**
    * @description Description and Image alt text
    */
   description: string;
@@ -26,19 +22,21 @@ function FeatureHighlights(
 ) {
   return (
     <Container class="min-h-[280px] p-6 sm:px-0 sm:py-10">
-      <div class="border-default border-1">
-        <div class="flex flex-col justify-evenly sm:flex-row divide-y-1 sm:divide-y-0 sm:divide-x-1 divide-default mx-6 sm:mx-0 sm:my-10">
-          {features.map(({ icon: id = "Truck", title, description }) => (
-            <div class="flex flex-row sm:flex-col gap-4 py-6 sm:py-0 sm:px-10">
+      <div>
+        <div class="flex flex-col sm:flex-row justify-evenly mx-6 sm:mx-0 sm:my-10">
+          {features.map(({ icon: id = "Truck", description }) => (
+            <div class="flex flex-row gap-4 py-6 sm:py-0 sm:px-10">
               <Icon
                 id={id}
-                width={40}
-                height={40}
-                strokeWidth={2}
+                width={60}
+                height={60}
+                strokeWidth={3}
               />
-              <div class="flex flex-col gap-2">
-                <Text variant="heading-3">{title}</Text>
-                <Text tone="subdued" variant="caption">
+              <div class="flex flex-col gap-2 place-self-center">
+                <Text
+                  tone="subdued"
+                  variant="caption"
+                >
                   {description}
                 </Text>
               </div>
