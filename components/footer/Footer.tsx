@@ -1,3 +1,4 @@
+import { useState } from "preact/hooks";
 import Icon, { AvailableIcons } from "$store/components/ui/Icon.tsx";
 import Text from "$store/components/ui/Text.tsx";
 import Container from "$store/components/ui/Container.tsx";
@@ -59,13 +60,60 @@ export interface Props {
 }
 
 function Footer({ sections = [] }: Props) {
+  const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   return (
-    <footer class="w-full bg-footer flex flex-col divide-y-1 divide-default">
+    <footer class="w-full bg-footer flex flex-col">
       <div>
-        <Container class="w-full flex flex-col divide-y-1 divide-default">
+        <Container class="w-full flex flex-col">
           <FooterContainer>
             <Newsletter />
           </FooterContainer>
+
+          <FooterContainer class="flex flex-row text-white gap-5">
+            <Icon
+              id={"Instagram"}
+              width={25}
+              height={20}
+              strokeWidth={1}
+            />
+            <Icon
+              id={"Facebook"}
+              width={25}
+              height={20}
+              strokeWidth={1}
+            />
+            <Icon
+              id={"WhatsApp"}
+              width={25}
+              height={20}
+              strokeWidth={0.01}
+            />
+            <Icon
+              id={"Tiktok"}
+              width={25}
+              height={20}
+              strokeWidth={1}
+            />
+            <Icon
+              id={"User"}
+              width={25}
+              height={20}
+              strokeWidth={0.01}
+            />
+          </FooterContainer>
+
+          <FooterContainer class="text-white">
+            <p>
+              Espaço para curta descrição do negócio, não permitir que sejam
+              escritas muitas coisas aqui pra não deixar o rodapé muito grande.
+            </p>
+            <br />
+            <p>Av. Cândido Hartmann - Mercês - Curitiba - Paraná - Brasil</p>
+            <br />
+            <p class="font-bold">email@dominio.com.br</p>
+          </FooterContainer>
+
+          <hr class="mx-5" />
 
           <FooterContainer>
             {/* Desktop view */}
@@ -94,32 +142,38 @@ function Footer({ sections = [] }: Props) {
             </ul>
 
             {/* Mobile view */}
-            <ul class="flex flex-col sm:hidden sm:flex-row gap-4">
-              {sections.map((section) => (
-                <li>
-                  <Text variant="body" tone="default-inverse">
-                    <details>
-                      <summary>
-                        {section.label}
-                      </summary>
+            <ul className="flex flex-col h-full lg:hidden text-white gap-3">
+              {sections.map((section, index) => {
+                return (
+                  <li key={index} class="flex flex-col">
+                    <div
+                      class="font-bold uppercase flex flex-row gap-5"
+                      onClick={() => setActiveSectionIndex(index)}
+                    >
+                      {section.label}
+                      <div>
+                        <Icon
+                          id="ChevronDown"
+                          width={20}
+                          height={20}
+                          strokeWidth={3}
+                        />
+                      </div>
+                    </div>
 
-                      <ul
-                        class={`flex ${
-                          isIcon(section.children[0]) ? "flex-row" : "flex-col"
-                        } gap-2 px-2 pt-2`}
-                      >
-                        {section.children.map((item) => (
-                          <li>
-                            <SectionItem item={item} />
-                          </li>
-                        ))}
-                      </ul>
-                    </details>
-                  </Text>
-                </li>
-              ))}
+                    {index === activeSectionIndex && (
+                      <div class="p-2 max-h-screen flex flex-1 flex-col">
+                        {section.children.map((item) => {
+                          return <SectionItem item={item} />;
+                        })}
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </FooterContainer>
+          <hr class="mx-5" />
         </Container>
       </div>
 

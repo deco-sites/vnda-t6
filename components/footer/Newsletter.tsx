@@ -24,10 +24,10 @@ function Newsletter() {
           placeholder="Digite seu e-mail..."
         />
         <button
-          class="text-white py-2 px-3 border-1 rounded w-full"
+          class="text-white py-2 px-3 border-1 rounded w-full font-bold"
           type="bgutton"
         >
-          Cadastrar
+          ENVIAR
         </button>
       </form>
     </div>
