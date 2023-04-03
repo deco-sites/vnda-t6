@@ -11,9 +11,10 @@ import * as $2 from "./routes/_middleware.ts";
 import * as $3 from "./routes/api/[...catchall].tsx";
 import * as $4 from "./routes/index.tsx";
 import * as $$0 from "./islands/AddToCartButton.tsx";
-import * as $$1 from "./islands/Header.tsx";
-import * as $$2 from "./islands/SearchControls.tsx";
-import * as $$3 from "./islands/SliderJS.tsx";
+import * as $$1 from "./islands/Footer.tsx";
+import * as $$2 from "./islands/Header.tsx";
+import * as $$3 from "./islands/SearchControls.tsx";
+import * as $$4 from "./islands/SliderJS.tsx";
 import * as $$$0 from "./sections/BannerGrid.tsx";
 import * as $$$1 from "./sections/Carousel.tsx";
 import * as $$$2 from "./sections/CookieConsent.tsx";
@@ -65,9 +66,10 @@ const manifest: DecoManifest = {
   },
   islands: {
     "./islands/AddToCartButton.tsx": $$0,
-    "./islands/Header.tsx": $$1,
-    "./islands/SearchControls.tsx": $$2,
-    "./islands/SliderJS.tsx": $$3,
+    "./islands/Footer.tsx": $$1,
+    "./islands/Header.tsx": $$2,
+    "./islands/SearchControls.tsx": $$3,
+    "./islands/SliderJS.tsx": $$4,
   },
   sections: {
     "./sections/BannerGrid.tsx": $$$0,
