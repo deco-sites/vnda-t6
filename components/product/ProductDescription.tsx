@@ -38,7 +38,7 @@ export default function ProductDescription() {
         },
         {
             label: <div
-                class={"md:w-[100%] w-[180px] pl-[15px] pr-[15px] cursor-pointer"}>Detalhes do
+                class={"md:w-[100%] w-[200px] pl-[15px] pr-[15px] cursor-pointer"}>Detalhes do
                 Produto</div>,
             content: <div class={"md:w-[50%] w-[100%] mt-[20px]"}>
                 Os detalhes do produto em geral vão englobar os materiais, e o que acompanha e compõe o produto.
