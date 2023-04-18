@@ -25,15 +25,20 @@ const isIcon = (item: Item): item is IconItem =>
 
 function SectionItem({ item }: { item: Item }) {
   return (
-    <Text variant="caption" tone="default-inverse">
+    <Text
+      variant="caption"
+      tone="default-inverse"
+      class="md:text-[1.1rem]"
+    >
       {isIcon(item)
         ? (
-          <div class="border-default border-1 py-1.5 px-2.5">
+          <div class="border border-white rounded-full bg-white w-7 h-7 flex justify-center items-center">
             <Icon
               id={item.icon}
-              width={25}
-              height={20}
-              strokeWidth={0.01}
+              width={28}
+              height={23}
+              strokeWidth={1.5}
+              color={"#b92c38"}
             />
           </div>
         )
@@ -62,48 +67,63 @@ export interface Props {
 function Footer({ sections = [] }: Props) {
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   return (
-    <footer class="w-full bg-footer flex flex-col">
+    <footer class="w-full bg-footer flex flex-col bg-[#b92c38]">
       <div>
-        <Container class="w-full flex flex-col">
+        <Container class="flex flex-col place-content-start">
           <FooterContainer>
             <Newsletter />
           </FooterContainer>
 
           <FooterContainer class="flex flex-row text-white gap-5 md:place-self-end">
-            <Icon
-              id={"Instagram"}
-              width={25}
-              height={20}
-              strokeWidth={1}
-            />
-            <Icon
-              id={"Facebook"}
-              width={25}
-              height={20}
-              strokeWidth={1}
-            />
-            <Icon
-              id={"WhatsApp"}
-              width={25}
-              height={20}
-              strokeWidth={0.01}
-            />
-            <Icon
-              id={"Tiktok"}
-              width={25}
-              height={20}
-              strokeWidth={1}
-            />
-            <Icon
-              id={"User"}
-              width={25}
-              height={20}
-              strokeWidth={0.01}
-            />
+            <div class="border border-white rounded-full bg-white w-7 h-7 flex justify-center items-center">
+              <Icon
+                id={"Instagram"}
+                width={28}
+                height={23}
+                strokeWidth={1.5}
+                color={"#b92c38"}
+              />
+            </div>
+            <div class="border border-white rounded-full bg-white w-7 h-7 flex justify-center items-center">
+              <Icon
+                id={"Facebook"}
+                width={28}
+                height={23}
+                strokeWidth={1.5}
+                color={"#b92c38"}
+              />
+            </div>
+            <div class="border border-white rounded-full bg-white w-7 h-7 flex justify-center items-center">
+              <Icon
+                id={"WhatsApp"}
+                width={23}
+                height={18}
+                strokeWidth={0.1}
+                color={"#b92c38"}
+              />
+            </div>
+            <div class="border border-white rounded-full bg-white w-7 h-7 flex justify-center items-center">
+              <Icon
+                id={"Tiktok"}
+                width={28}
+                height={23}
+                strokeWidth={1.5}
+                color={"#b92c38"}
+              />
+            </div>
+            <div class="border border-white rounded-full bg-white w-7 h-7 flex justify-center items-center">
+              <Icon
+                id={"User"}
+                width={28}
+                height={23}
+                strokeWidth={1.5}
+                color={"#b92c38"}
+              />
+            </div>
           </FooterContainer>
 
-          <div class="md:flex md:flex-row md:divide-x-2 md:divide-default">
-            <FooterContainer class="text-white md:w-[25%]">
+          <div class="md:flex md:flex-row md:divide-x-2 md:divide-default md:pl-0">
+            <FooterContainer class="md:py-0 md:px-0 text-white md:w-[30%] md:mr-10 md:ml-0 text-[1.1rem]">
               <p>
                 Espaço para curta descrição do negócio, não permitir que sejam
                 escritas muitas coisas aqui pra não deixar o rodapé muito
@@ -117,13 +137,17 @@ function Footer({ sections = [] }: Props) {
 
             <hr class="mx-5 md:hidden" />
 
-            <FooterContainer>
+            <FooterContainer class="md:flex md:py-0 md:px-0 w-full">
               {/* Desktop view */}
-              <ul class="hidden sm:flex flex-row gap-60 ml-5">
+              <ul class="hidden sm:flex flex-row gap-60 ml-5 w-full justify-between text-[1.4rem]">
                 {sections.map((section) => (
                   <li>
                     <div>
-                      <Text variant="heading-3" tone="default-inverse">
+                      <Text
+                        variant="heading-3"
+                        tone="default-inverse"
+                        class="font-bold"
+                      >
                         {section.label}
                       </Text>
 
@@ -153,12 +177,12 @@ function Footer({ sections = [] }: Props) {
                         onClick={() => setActiveSectionIndex(index)}
                       >
                         {section.label}
-                        <div>
+                        <div class="justify-end absolute right-0 mr-5">
                           <Icon
                             id="ChevronDown"
                             width={20}
                             height={20}
-                            strokeWidth={3}
+                            strokeWidth={1}
                           />
                         </div>
                       </div>
@@ -180,10 +204,15 @@ function Footer({ sections = [] }: Props) {
         </Container>
       </div>
 
-      <div class="md:place-self-end md:m-3">
+      <div class="w-full">
         <Container class="w-full">
           <FooterContainer class="flex w-full">
-            <ul class="flex justify-end gap-2">
+            <img
+              src="https://cdn.vnda.dev/template6/2022/03/03/15_3_7_777_securitybadge.svg?v=1649879201"
+              alt="Site Verificado"
+              class="mr-auto w-36 h-16"
+            />
+            <ul class="flex place-content-end gap-2">
               <li>
                 <Icon
                   class="text-default-inverse"
@@ -203,6 +232,11 @@ function Footer({ sections = [] }: Props) {
                 />
               </li>
             </ul>
+          </FooterContainer>
+          <FooterContainer class="md:pt-0">
+            <p class="text-white text-center text-sm md:text-left">
+              Vnda - Tecnologia em E-commerce
+            </p>
           </FooterContainer>
         </Container>
       </div>
